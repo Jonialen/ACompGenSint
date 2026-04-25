@@ -1,6 +1,6 @@
 # Python Parser - Flex + YACC
 
-Repositorio: https://github.com/Jonialen/ACompGenSint
+Repositorio: [https://github.com/Jonialen/ACompGenSint](https://github.com/Jonialen/ACompGenSint/tree/Yacc)
 
 - `main` — codigo base con el scanner de Flex
 - `Yacc` — actividad completa con parser YACC y respuestas
