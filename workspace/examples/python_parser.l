@@ -26,15 +26,19 @@ SPACE      [ \t]
 {ID}       { print_token("ID");     return ID;     }
 {NUMBER}   { print_token("NUMBER"); return NUMBER; }
 
-"+"        { print_token("PLUS");   return PLUS;   }
-"-"        { print_token("MINUS");  return MINUS;  }
-"*"        { print_token("TIMES");  return TIMES;  }
-"/"        { print_token("DIVIDE"); return DIVIDE; }
-"="        { print_token("ASSIGN"); return ASSIGN; }
-"("        { print_token("LPAREN"); return LPAREN; }
-")"        { print_token("RPAREN"); return RPAREN; }
-","        { print_token("COMMA");  return COMMA;  }
-":"        { print_token("COLON");  return COLON;  }
+"+"        { print_token("PLUS");     return PLUS;     }
+"-"        { print_token("MINUS");    return MINUS;    }
+"*"        { print_token("TIMES");    return TIMES;    }
+"/"        { print_token("DIVIDE");   return DIVIDE;   }
+"%"        { print_token("MOD");      return MOD;      }
+"^"        { print_token("POWER");    return POWER;    }
+"="        { print_token("ASSIGN");   return ASSIGN;   }
+"("        { print_token("LPAREN");   return LPAREN;   }
+")"        { print_token("RPAREN");   return RPAREN;   }
+"["        { print_token("LBRACKET"); return LBRACKET; }
+"]"        { print_token("RBRACKET"); return RBRACKET; }
+","        { print_token("COMMA");    return COMMA;    }
+":"        { print_token("COLON");    return COLON;    }
 
 \n         { line++; return NEWLINE; }
 {SPACE}+   { /* skip spaces and tabs */ }

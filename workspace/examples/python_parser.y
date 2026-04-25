@@ -10,12 +10,13 @@ void yyerror(const char* msg);
 
 %token DEF RETURN IF ELSE
 %token ID NUMBER
-%token PLUS MINUS TIMES DIVIDE ASSIGN
-%token LPAREN RPAREN COMMA COLON
+%token PLUS MINUS TIMES DIVIDE MOD POWER ASSIGN
+%token LPAREN RPAREN LBRACKET RBRACKET COMMA COLON
 %token NEWLINE
 
 %left PLUS MINUS
-%left TIMES DIVIDE
+%left TIMES DIVIDE MOD
+%right POWER
 
 %%
 
@@ -32,7 +33,7 @@ statement
     : ID ASSIGN expr NEWLINE   { printf("  [PARSE] Assignment\n"); }
     | expr NEWLINE             { printf("  [PARSE] Expression statement\n"); }
     | func_def
-    | NEWLINE                  { /* blank line – ignore */ }
+    | NEWLINE                  { /* blank line - ignore */ }
     ;
 
 func_def
@@ -57,20 +58,37 @@ expr
     ;
 
 term
-    : term TIMES  factor       { printf("  [PARSE] Multiplication\n"); }
-    | term DIVIDE factor       { printf("  [PARSE] Division\n"); }
-    | factor
+    : term TIMES  power        { printf("  [PARSE] Multiplication\n"); }
+    | term DIVIDE power        { printf("  [PARSE] Division\n"); }
+    | term MOD    power        { printf("  [PARSE] Modulo\n"); }
+    | power
     ;
 
-factor
+power
+    : atom POWER power         { printf("  [PARSE] Exponentiation\n"); }
+    | atom
+    ;
+
+atom
     : ID
     | NUMBER
     | LPAREN expr RPAREN
+    | list
+    ;
+
+list
+    : LBRACKET RBRACKET              { printf("  [PARSE] Empty list\n"); }
+    | LBRACKET expr_list RBRACKET    { printf("  [PARSE] List\n"); }
+    ;
+
+expr_list
+    : expr
+    | expr_list COMMA expr
     ;
 
 %%
 
-/* ── Support functions ───────────────────────────────────────────────────── */
+/* -- Support functions --------------------------------------------------- */
 
 void yyerror(const char* msg) {
     fprintf(stderr, "\n  [SYNTAX ERROR] %s at line %d\n", msg, line);
@@ -80,7 +98,7 @@ int main() {
     printf("=== Python Parser (Flex + YACC) ===\n\n");
     int result = yyparse();
     if (result == 0) {
-        printf("\n[OK] Input parsed successfully — no syntax errors.\n");
+        printf("\n[OK] Input parsed successfully - no syntax errors.\n");
     } else {
         printf("\n[FAIL] Parsing stopped due to syntax error(s).\n");
     }
