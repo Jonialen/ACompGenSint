@@ -1,5 +1,10 @@
 # Python Parser - Flex + YACC
 
+Repositorio: https://github.com/Jonialen/ACompGenSint
+
+- `main` — codigo base con el scanner de Flex
+- `Yacc` — actividad completa con parser YACC y respuestas
+
 Extends the Python scanner with a YACC grammar that validates syntax and reports
 errors with line numbers. Also includes modulo, exponentiation, and list support.
 
